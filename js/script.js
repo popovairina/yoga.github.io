@@ -90,6 +90,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
    // Scroll
 
+   let nav = document.querySelector('header ul'),
+       headerHeight = document.querySelector('header').offsetHeight;
+
+   nav.addEventListener('click', function(e) {
+      e.preventDefault();
+      let target = e.target;
+      if (target && target.tagName == 'A') { // кликаем на a ?
+          let id = target.getAttribute('href'), // #photo
+              section = document.querySelector(`${id}`),
+              top = section.offsetTop; // расстояние от начала окна до секции
+          scrollWindow();
+          function scrollWindow() {
+              requestAnimationFrame(scrollWindow);
+              let scrollBy = (top - headerHeight) / 20;
+              window.scrollTo(0, top - headerHeight);
+          }
+      }
+
+   });
 
 
 });
