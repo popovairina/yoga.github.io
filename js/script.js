@@ -93,22 +93,27 @@ document.addEventListener('DOMContentLoaded', function() {
    let nav = document.querySelector('header ul'),
        headerHeight = document.querySelector('header').offsetHeight;
 
-   nav.addEventListener('click', function(e) {
-      e.preventDefault();
-      let target = e.target;
-      if (target && target.tagName == 'A') { // кликаем на a ?
-          let id = target.getAttribute('href'), // #photo
-              section = document.querySelector(`${id}`),
-              top = section.offsetTop; // расстояние от начала окна до секции
-          scrollWindow();
-          function scrollWindow() {
-              requestAnimationFrame(scrollWindow);
-              let scrollBy = (top - headerHeight) / 20;
-              window.scrollTo(0, top - headerHeight);
-          }
-      }
+    nav.addEventListener('click', function(e) {
+        e.preventDefault();
+        let target = e.target;
+        if (target && target.tagName == 'A') { // кликаем на a ?
 
-   });
+            let count = 0;
+            let speed = 100;
+
+            let id = target.getAttribute('href');
+            let section = document.querySelector(id);
+            let top = section.offsetTop;
+            let scrollBy = (top - window.scrollY - headerHeight) / speed;
+
+            requestAnimationFrame(function scrollWindow(){
+                if (count++ < speed) {
+                    window.scrollBy(0, scrollBy);
+                    requestAnimationFrame(scrollWindow);
+                }
+            });
+        }
+    });
 
 
 });
