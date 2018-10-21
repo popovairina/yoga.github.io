@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', function() {
            seconds = Math.floor((t/1000) % 60),
            minutes = Math.floor((t/1000/60) % 60),
            hours = Math.floor((t/1000/60/60));
-       if (hours.toString().length == 1) { // Это как-то можно оптимизировать,
-           hours = '0' + hours;            // чтоб не писать 3 условия?
+       if (hours.toString().length == 1) {
+           hours = `0${hours}`;
        }
        if (minutes.toString().length == 1) {
-           minutes = '0' + minutes;
+           minutes = `0${minutes}`;
        }
        if (seconds.toString().length == 1) {
-           seconds = '0' + seconds;
+           seconds = `0${seconds}`;
        }
        return {
          'total' : t,
@@ -115,5 +115,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Modal
 
+   let moreBtn = document.querySelector('.more'),
+       overlay = document.querySelector('.overlay'),
+       close = document.querySelector('.popup-close');
+
+   moreBtn.addEventListener('click', function() {
+       overlay.style.display = 'block';
+       this.classList.add('more-splash');
+       document.body.style.overflow = 'hidden';
+   });
+
+   close.addEventListener('click', function() {
+       overlay.style.display = 'none';
+       moreBtn.classList.remove('more-splash');
+   });
 });
