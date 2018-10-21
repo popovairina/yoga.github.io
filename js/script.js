@@ -93,33 +93,31 @@ document.addEventListener('DOMContentLoaded', function() {
    let nav = document.querySelector('header ul'),
        headerHeight = document.querySelector('header').offsetHeight;
 
-    nav.addEventListener('click', function(e) {
-        e.preventDefault();
-        let target = e.target;
-        if (target && target.tagName == 'A') { // кликаем на a ?
-
-            let count = 0;
-            let speed = 100;
-
-            let id = target.getAttribute('href');
-            let section = document.querySelector(id);
-            let top = section.offsetTop;
-            let scrollBy = (top - window.scrollY - headerHeight) / speed;
-
-            requestAnimationFrame(function scrollWindow(){
-                if (count++ < speed) {
-                    window.scrollBy(0, scrollBy);
-                    requestAnimationFrame(scrollWindow);
-                }
-            });
-        }
-    });
+   nav.addEventListener('click', function(e) {
+       e.preventDefault();
+       let target = e.target;
+       if (target && target.tagName == 'A') { // кликаем на a ?
+           let count = 0;
+           let speed = 100;
+           let id = target.getAttribute('href');
+           let section = document.querySelector(id);
+           let top = section.offsetTop;
+           let scrollBy = (top - window.scrollY - headerHeight) / speed;
+           requestAnimationFrame(function scrollWindow(){
+               if (count++ < speed) {
+                   window.scrollBy(0, scrollBy);
+                   requestAnimationFrame(scrollWindow);
+               }
+           });
+       }
+   });
 
     // Modal
 
    let moreBtn = document.querySelector('.more'),
        overlay = document.querySelector('.overlay'),
-       close = document.querySelector('.popup-close');
+       close = document.querySelector('.popup-close'),
+       tabBtn = document.querySelectorAll('.description-btn');
 
    moreBtn.addEventListener('click', function() {
        overlay.style.display = 'block';
@@ -130,5 +128,13 @@ document.addEventListener('DOMContentLoaded', function() {
    close.addEventListener('click', function() {
        overlay.style.display = 'none';
        moreBtn.classList.remove('more-splash');
+       document.body.style.overflow = '';
+   });
+
+   tabBtn.forEach(function(item) {
+       item.addEventListener('click', function() {
+           overlay.style.display = 'block';
+           this.classList.add('more-splash');
+       });
    });
 });
