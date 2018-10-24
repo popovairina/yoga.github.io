@@ -101,14 +101,15 @@ document.addEventListener('DOMContentLoaded', function() {
                speed = 100,
                id = target.getAttribute('href'),
                section = document.querySelector(id),
-               top = section.offsetTop,
-               scrollBy = (top - window.scrollY - headerHeight) / speed;
-           requestAnimationFrame(function scrollWindow(){
-               if (count++ < speed) {
-                   window.scrollBy(0, scrollBy);
-                   requestAnimationFrame(scrollWindow);
-               }
-           });
+               top = section.offsetTop;
+           window.scrollTo(0, top - headerHeight);
+               // scrollBy = (top - window.scrollY - headerHeight) / speed;
+           // requestAnimationFrame(function scrollWindow(){
+           //     if (count++ < speed) {
+           //         window.scrollBy(0, scrollBy);
+           //         requestAnimationFrame(scrollWindow);
+           //     }
+           // });
        }
    });
 
