@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
    }
 
    // Timer
-   let deadline = '2018-10-23';
+   let deadline = '2018-10-27';
 
    function getTimeRemaining(endTime) {
        let t = Date.parse(endTime) - Date.parse(new Date()),
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
    nav.addEventListener('click', function(e) {
        e.preventDefault();
        let target = e.target;
-       if (target && target.tagName == 'A') { // кликаем на a ?
+       if (target && target.tagName == 'A') {
            let count = 0,
                speed = 100,
                id = target.getAttribute('href'),
