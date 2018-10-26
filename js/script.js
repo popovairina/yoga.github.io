@@ -149,46 +149,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function sendForm (form) {
         let input = form.querySelectorAll('input');
-        // input.forEach(function(item, key) {
-        //     item.addEventListener('keydown', function(e) {
-        //         console.log(e.keyCode);
-        //         if (e.keyCode != 187 || e.keyCode < 48 || e.keyCode > 57) {
-        //             e.preventDefault();
-        //         }
-        //     });
-        // });
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             form.appendChild(statusMessage);
             console.log(input);
-
-            let request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-            request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
             let formData = new FormData(form);
 
-            let obj = {};
-            formData.forEach(function(value, key) {
-                obj[key] = value;
-            });
+            function postData(data) {
+                return new Promise(function(resolve, reject) {
+                    let request = new XMLHttpRequest();
+                    request.open('POST', 'server.php');
+                    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-            let json = JSON.stringify(obj);
-            request.send(json);
+                    let obj = {};
+                    formData.forEach(function(value, key) {
+                        obj[key] = value;
+                    });
 
-            request.addEventListener('readystatechange', function() {
-                if (request.readyState < 4) {
-                    statusMessage.innerHTML = message.loading;
-                } else if (request.readyState === 4 && request.status === 200) {
-                    statusMessage.innerHTML = message.success;
-                } else {
-                    statusMessage.innerHTML = message.failure;
+                    let json = JSON.stringify(obj);
+                    request.send(json);
+
+                    request.onreadystatechange = function() {
+                        if (request.readyState < 4) {
+                            resolve()
+                        } else if (request.readyState === 4) {
+                            if (request.status === 200) {
+                                resolve()
+                            } else {
+                                reject()
+                            }
+                        }
+                    }
+                });
+            }
+
+            postData(formData)
+                .then(() => statusMessage.innerHTML = message.loading)
+                .then(() => statusMessage.innerHTML = message.success)
+                .catch(() => statusMessage.innerHTML = message.failure)
+                .then(clearInput);
+
+            function clearInput() {
+                for (let i = 0; i < input.length; i++) {
+                    input[i].value = '';
                 }
-            });
-
-            for (let i = 0; i < input.length; i++) {
-                input[i].value = '';
             }
         });
     }
