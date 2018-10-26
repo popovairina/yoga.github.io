@@ -153,7 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             form.appendChild(statusMessage);
-            console.log(input);
             let formData = new FormData(form);
 
             function postData(data) {
@@ -163,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
                     let obj = {};
-                    formData.forEach(function(value, key) {
+                    data.forEach(function(value, key) {
                         obj[key] = value;
                     });
 
