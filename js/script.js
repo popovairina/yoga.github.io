@@ -197,6 +197,107 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Slider
+
+    let slideIndex = 1,
+        slides = document.querySelectorAll('.slider-item'),
+        prev = document.querySelector('.arrow-left'),
+        next = document.querySelector('.arrow-right'),
+        dotsWrap = document.querySelector('.slider-dots'),
+        dots = document.querySelectorAll('.dot');
+
+    showSlides(slideIndex);
+
+    function showSlides(n) {
+        if (n > slides.length) {
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = slides.length;
+        }
+
+        slides.forEach((item) => item.style.display = 'none');
+        dots.forEach((item) => item.classList.remove('dot-active'));
+        slides[slideIndex - 1].style.display = 'block';
+        dots[slideIndex - 1].classList.add('dot-active');
+    }
+
+    function switchSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    prev.addEventListener('click', function() {
+       switchSlides(-1);
+    });
+
+    next.addEventListener('click', function () {
+        switchSlides(1);
+    });
+
+    dotsWrap.addEventListener('click', function (e) {
+       let target = e.target;
+       for (let i = 1; i < dots.length + 1; i++) {
+           if (target.classList.contains('dot') && target == dots[i-1]) {
+               currentSlide(i);
+           }
+       }
+    });
+
+    // Calc
+
+    let persons = document.querySelectorAll('.counter-block-input')[0],
+        restDays = document.querySelectorAll('.counter-block-input')[1],
+        place = document.getElementById('select'),
+        totalValue = document.getElementById('total'),
+        personsSum = 0,
+        daysSum = 0,
+        total = 0;
+
+    totalValue.innerHTML = 0;
+
+    persons.addEventListener('change', function(e) {
+       personsSum = +this.value;
+       if (Number.isInteger(personsSum) == false) {
+           this.value = '';
+           alert('Введите целое значение');
+       }
+       total = (daysSum + personsSum) * 4000;
+       if (restDays.value == '' || personsSum == '' || daysSum == '') {
+           totalValue.innerHTML = 0;
+       } else {
+           let a = total;
+           totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+       }
+    });
+
+    restDays.addEventListener('change', function() {
+        daysSum = +this.value;
+        if (Number.isInteger(daysSum) == false) {
+            this.value = '';
+            alert('Введите целое значение');
+        }
+        total = (daysSum + personsSum) * 4000;
+
+        if (persons.value == '' || daysSum == '' || personsSum == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            let a = total;
+            totalValue.innerHTML = a * place.options[place.selectedIndex].value;
+        }
+    });
+
+    place.addEventListener('change', function () {
+       if (restDays.value == 0 || persons.value == 0 || restDays.value == '' || persons.value == '') {
+           totalValue.innerHTML = 0;
+       } else {
+           let a = total;
+           totalValue.innerHTML = a * place.options[place.selectedIndex].value;
+       }
+    });
 
 
 });
