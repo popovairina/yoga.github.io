@@ -9,7 +9,14 @@ function calc() {
 
     totalValue.innerHTML = 0;
 
-    persons.addEventListener('change', function(e) {
+    persons.addEventListener('input', function() {
+        return this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    restDays.addEventListener('input', function() {
+        return this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    persons.addEventListener('change', function() {
         personsSum = +this.value;
         if (Number.isInteger(personsSum) == false) {
             this.value = '';
