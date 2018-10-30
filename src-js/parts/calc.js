@@ -13,14 +13,13 @@ function calc() {
         personsSum = +this.value;
         if (Number.isInteger(personsSum) == false) {
             this.value = '';
-            alert('Введите целое значение');
         }
         total = (daysSum + personsSum) * 4000;
         if (restDays.value == '' || personsSum == '' || daysSum == '') {
             totalValue.innerHTML = 0;
         } else {
             let a = total;
-            totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+            totalValue.innerHTML = a * place.options[place.selectedIndex].value;
         }
     });
 
@@ -28,7 +27,6 @@ function calc() {
         daysSum = +this.value;
         if (Number.isInteger(daysSum) == false) {
             this.value = '';
-            alert('Введите целое значение');
         }
         total = (daysSum + personsSum) * 4000;
 

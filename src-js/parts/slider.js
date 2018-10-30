@@ -1,8 +1,8 @@
 function slider() {
     let slideIndex = 1,
         slides = document.querySelectorAll('.slider-item'),
-        prev = document.querySelector('.arrow-left'),
-        next = document.querySelector('.arrow-right'),
+        prev = document.querySelector('.prev'),
+        next = document.querySelector('.next'),
         dotsWrap = document.querySelector('.slider-dots'),
         dots = document.querySelectorAll('.dot');
 
